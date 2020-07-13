@@ -28,10 +28,17 @@ module.exports = function() {
   const areaTypes = createData(areaNames);
   const inspectionTypes = createData(inspectionNames);
 
+  const questions = _.times(4, (id) => ({
+    id: id + 1,
+    question: `Question ${id + 1}`,
+    answers: ['answer 1', 'answer 2', 'answer 3', 'answer 4']
+  }));
+
   const store = {
     divisions,
     areaTypes,
     inspectionTypes,
+    questions,
   };
 
   const randomScore = () => Math.floor(Math.random() * 100) + 1;
@@ -56,10 +63,10 @@ module.exports = function() {
                 username: users[userId].name,
                 score: randomScore(),
                 id: id++,
-                answers: [{
-                  question_id: areaTypeId + 1,
+                answers: _.times(questions.length, (answerId) => ({
+                  question_id: answerId + 1,
                   answer: `answer ${areaTypeId + 1}`,
-                }]
+                }))
               })
             })
           })
@@ -74,10 +81,5 @@ module.exports = function() {
     ...store,
     users,
     inspections: createInspectionData(),
-    questions: _.times(4, (id) => ({
-      id,
-      question: `Question ${id}`,
-      answers: ['answer 1', 'answer 2', 'answer 3']
-    }))
   }
 };

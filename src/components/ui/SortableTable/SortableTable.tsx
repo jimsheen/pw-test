@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-	isEmpty,
-	uniqBy
+	isEmpty
 } from 'lodash';
 import {
-	Select
-} from '@rebass/forms';
-import {
-	Button
+	Button,
 } from 'rebass';
 import {
 	Table,
@@ -19,56 +15,48 @@ import {
 } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
+import { TableMappingTypes } from 'types';
 
-// const TableFilters = ({ mappings, onFilterChange }) => {}
-
-type MyGroupType = {
-    [key:string]: any;
-}
+import TableFilters from './TableFilters';
 
 type SortableTableTypes = {
 	items: any[],
-	mappings: MyGroupType[],
+	pageItems: any[],
+	mappings: TableMappingTypes[],
+	filterTerms: any,
+	primaryKey: any,
+	onViewDetails: (id: string) => void,
 	onFilterChange: (key: string, value: string) => void;
+	onClearFilters: () => void,
 };
 
-const SortableTable: React.FC<SortableTableTypes> = ({
+const SortableTable: React.FC < SortableTableTypes > = ({
 	mappings,
 	items,
+	pageItems,
 	onFilterChange,
+	onClearFilters,
+	filterTerms,
+	onViewDetails,
+	primaryKey,
 }) => {
 
 	if (!mappings && !items) return null;
 
 	return (
 		<React.Fragment>
-			{!isEmpty(mappings) && 
-		  		<Table>
-			  		<Tbody>
-						<Tr>
-							{mappings.map((label) => (
-                <Th key={label.value} >
-                	{label.filterable &&
-	                  <Select onChange={(e) => onFilterChange(label.value, e.target.value)} >
-	                  	<option value=''>Select an option...</option>
-	                    {uniqBy(items, label.value).map((item, index) => (
-	                        <option value={item[label.value]} key={item[label.value]}>
-	                        	{item[label.value]}
-	                        </option>
-	                    ))}
-	                  </Select>
-                	}
-                	{label.filterable && (<span>&nbsp;</span>)}
-                 </Th>
-              ))}
-              <Th>&nbsp;</Th>
-						</Tr>
-			  		</Tbody>
-		  		</Table>
-	  		}
+			{!isEmpty(mappings) &&
+	  		<TableFilters 
+	  			mappings={mappings} 
+	  			onFilterChange={onFilterChange} 
+	  			items={items}
+	  			filterTerms={filterTerms}
+	  			onClearFilters={onClearFilters}
+	  		/>
+  		}
 			<Table>
 				{!isEmpty(mappings) &&
-			  		<Thead>
+			  	<Thead>
 						<Tr>
 							 {mappings.map((label, i) => (
 							  <Th key={label.value} style={{ textAlign: 'left' }}>
@@ -76,11 +64,11 @@ const SortableTable: React.FC<SortableTableTypes> = ({
 							  </Th>
 							))}
 						</Tr>
-			  		</Thead>
+			  	</Thead>
 			  	}
-		  		{!isEmpty(items) && !isEmpty(mappings) &&
+		  		{!isEmpty(pageItems) && !isEmpty(mappings) &&
 		  			<Tbody>
-			  			{items.map((row, index) => (
+			  			{pageItems.map((row, index) => (
 			  				<Tr key={index} >
 			  					{mappings.map((col, i) => (
 			  						<Td key={col.value} >
@@ -88,7 +76,12 @@ const SortableTable: React.FC<SortableTableTypes> = ({
 			  						</Td>
 			  					))}
 			  					<Td>
-			  						<Button>View details</Button>
+			  						<Button 
+			  							width="100%"
+			  							onClick={() => onViewDetails(row[primaryKey])}
+			  						>
+			  							View details
+			  						</Button>
 			  					</Td>
 			  				</Tr>
 			  			))}

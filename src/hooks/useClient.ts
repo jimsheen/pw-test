@@ -13,7 +13,8 @@ const useClient = ({
     const [response, setResponse] = useState({} as any);
     const [isLoading, setLoading] = useState(false);
 
-    const fetchData = async () => {
+    useEffect(() => {
+        const fetchData = async () => {
         setLoading(true);
         try {
             const {
@@ -34,10 +35,8 @@ const useClient = ({
             setLoading(false);
         }
     }
-
-    useEffect(() => {
         fetchData();
-    }, [])
+    }, [params, uri])
     return { response, isLoading };
 }
 

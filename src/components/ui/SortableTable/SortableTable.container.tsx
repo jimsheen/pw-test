@@ -1,54 +1,101 @@
 import React, { useState, useEffect } from 'react';
-import { isEmpty } from 'lodash';
 
 import SortableTable from './SortableTable';
+import Pagination from 'components/ui/Pagination';
 
-type MyGroupType = {
-    [key:string]: any
-}
+import { TableMappingTypes } from 'types';
 
 type SortableTableContainerTypes = {
 	items: any,
-	mappings: MyGroupType[],
+	mappings: TableMappingTypes[],
+	primaryKey?: string,
+	onViewDetails: (id: string) => void,
 };
+
+const getTotalPages = (totalItems: number, perPage: number) => Math.round(totalItems / perPage);
 
 const SortableTableContainer: React.FC<SortableTableContainerTypes> = ({
 	items,
-	mappings
+	mappings,
+	onViewDetails,
+	primaryKey
 }) => {
 
-	console.log(items);
-
-	const [sortedItems, setSortedItems] = useState(items);
+	const [sortedItems, setSortedItems] = useState([]);
+	const [pageItems, setPageItems] = useState([]);
 	const [filterTerms, setFilterTerms] = useState({});
+	
+	const perPage = 10;
+	const [currentPage, setCurrentPage] = useState(1)
+	const [totalPages, setTotalPages] = useState(getTotalPages(items.length, perPage) || 0);
 
 	const onFilterChange = (key: string, value: string | number) => {
+		if (key === value) {
+			setFilterTerms({});
+			return null;
+		}
 		setFilterTerms(obj => ({
 			...obj,
 			[key]: value,
 		}));
+		setCurrentPage(1);
 	};
 
+	const onClearFilters = () => {
+		setFilterTerms({});
+		setCurrentPage(1);
+	}
+
+	const onPageChange = (currentPage: number) => {
+		setCurrentPage(currentPage);
+	};
+
+	// filter items per page or by search terms
 	useEffect(() => {
 
-		if (!isEmpty(filterTerms)) {
-			setSortedItems(() =>
-				items.filter((item: any) =>
-					Object.entries(filterTerms).every(([k, v]) =>
-						item[k] === v)
-					)
+		setPageItems(() => {
+			return items.filter((item: any) =>
+				Object.entries(filterTerms).every(([k, v]) =>
+					item[k] === v
 				)
-		}
+			).slice((currentPage * perPage) - perPage, perPage * currentPage)
+		})
+		setSortedItems(() => {
+			return items.filter((item: any) =>
+				Object.entries(filterTerms).every(([k, v]) =>
+					item[k] === v
+				)
+			)
+		})
+	}, [items, filterTerms, currentPage]);
 
-	}, [items, filterTerms])
+	useEffect(() => {
+		setTotalPages(getTotalPages(sortedItems.length, perPage));
+	}, [sortedItems])
 
 	const tableProps = {
 		items: sortedItems,
+		pageItems,
 		mappings,
 		onFilterChange,
+		onClearFilters,
+		filterTerms,
+		onViewDetails,
+		primaryKey: primaryKey || 'id',
 	};
 
-	return <SortableTable { ...tableProps } />
+	const paginationProps = {
+		totalPages,
+		currentPage,
+		onPageChange
+	};
+
+	return (
+		<>
+			<SortableTable { ...tableProps } />
+			<Pagination { ...paginationProps } />
+		</>
+	)
 }
 
 
