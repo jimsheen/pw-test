@@ -9,6 +9,7 @@ import useClient from 'hooks/useClient';
 import SortableTable from 'components/ui/SortableTable/';
 import Modal from 'components/ui/Modal';
 import InspectorDetail from './InspectorDetail';
+import LoadingSpinner from 'components/ui/LoadingSpinner';
 
 const mappings = [{
 	label: 'Division name',
@@ -67,13 +68,14 @@ const DashboardPage: React.FC = () => {
 	return (
 		<>
 			<h1>Dashboard</h1>
-				{!isLoading &&
-					<Box>
-						<Box>
-							<SortableTable { ...SortableTableProps } />
-						</Box>
-					</Box>
-				}
+				<Box>
+					{!isLoading &&
+						<SortableTable { ...SortableTableProps } />
+					}
+					{isLoading &&
+						<LoadingSpinner />
+					}
+				</Box>
 				<Modal 
 					isVisible={viewDetailsModal.isVisible}
 					closeModal={() => setViewDetailsModal((s) => ({ ...s, isVisible: false })) }
