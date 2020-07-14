@@ -10,7 +10,8 @@ const LayoutContainer: React.FC = ({ children }) => {
 	      maxWidth: 1200,
 	      mx: 'auto',
 	      height: '100%',
-	      px: [3, 5]
+	      px: [3, 5],
+	      pt: 1,
 	    }}>
 	    	{children}
 	  </Box>

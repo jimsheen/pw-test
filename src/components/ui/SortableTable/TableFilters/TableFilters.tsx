@@ -31,7 +31,7 @@ const TableFilters: React.FC < TableFilterTypes > = ({
 }) => {
 	const [isFiltersOpen, setFiltersOpen] = useState(false);
 	return (
-		<Box mb={2}>
+		<Box mb={3}>
 			<Box mb={2}>
 				<Flex alignItems="center">
 					<Button 

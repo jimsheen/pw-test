@@ -1,28 +1,32 @@
 import React from 'react';
-
 import {
-	BrowserRouter,
 	Switch,
 	Route,
 } from 'react-router-dom';
 
-import { ThemeProvider, theme } from './theme';
-import { LayoutContainer } from './components/layout/';
+import { useAuth } from 'context/AuthContext';
 import DashboardPage from './components/pages/DashboardPage';
+import LoginPage from 'components/pages/LoginPage';
+
+function AuthenticatedApp() {
+	return (
+		<Switch>
+			<Route path="/" component={DashboardPage} exact />
+		</Switch>
+	)
+}
+
+function UnauthenticatedApp() {
+	return (
+		<Switch>
+			<Route path="/" component={LoginPage} exact />
+		</Switch>
+	)
+}
 
 function App() {
-
-	return (
-		<ThemeProvider theme={theme}>
-			<BrowserRouter>
-				<LayoutContainer>
-					<Switch>
-						<Route path="/" component={DashboardPage} exact />
-					</Switch>
-				</LayoutContainer>
-			</BrowserRouter>
-		</ThemeProvider>
-	);
+	const { user } = useAuth();
+	return !user ? <AuthenticatedApp /> : <UnauthenticatedApp />
 }
 
 export default App;

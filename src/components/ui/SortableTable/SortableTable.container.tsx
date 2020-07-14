@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { omit } from 'lodash';
+
 import SortableTable from './SortableTable';
 import Pagination from 'components/ui/Pagination';
 
@@ -31,13 +33,13 @@ const SortableTableContainer: React.FC<SortableTableContainerTypes> = ({
 
 	const onFilterChange = (key: string, value: string | number) => {
 		if (key === value) {
-			setFilterTerms({});
-			return null;
+			setFilterTerms((prevTerms) => (omit(prevTerms, key)));
+		} else {
+			setFilterTerms(obj => ({
+				...obj,
+				[key]: value,
+			}));
 		}
-		setFilterTerms(obj => ({
-			...obj,
-			[key]: value,
-		}));
 		setCurrentPage(1);
 	};
 
@@ -71,7 +73,9 @@ const SortableTableContainer: React.FC<SortableTableContainerTypes> = ({
 
 	useEffect(() => {
 		setTotalPages(getTotalPages(sortedItems.length, perPage));
-	}, [sortedItems])
+	}, [sortedItems]);
+
+	console.log(filterTerms);
 
 	const tableProps = {
 		items: sortedItems,

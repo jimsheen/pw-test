@@ -10,6 +10,7 @@ import SortableTable from 'components/ui/SortableTable/';
 import Modal from 'components/ui/Modal';
 import InspectorDetail from './InspectorDetail';
 import LoadingSpinner from 'components/ui/LoadingSpinner';
+import LayoutContainer from 'components/layout/LayoutContainer';
 
 const mappings = [{
 	label: 'Division name',
@@ -66,7 +67,7 @@ const DashboardPage: React.FC = () => {
 	};
 
 	return (
-		<>
+		<LayoutContainer>
 			<h1>Dashboard</h1>
 				<Box>
 					{!isLoading &&
@@ -82,7 +83,7 @@ const DashboardPage: React.FC = () => {
 				>
 					<InspectorDetail item={detailItem} />
 				</Modal>
-		</>
+		</LayoutContainer>
 	)
 };
 

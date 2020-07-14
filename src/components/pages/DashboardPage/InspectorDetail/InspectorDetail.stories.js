@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { storiesOf } from '@storybook/react';
-
 import InspectorDetail from './InspectorDetail';
 
 const item = {

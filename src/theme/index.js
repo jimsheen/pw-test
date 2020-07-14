@@ -2,7 +2,7 @@ import React from "react"
 import { ThemeProvider } from 'emotion-theming'
 import { default as defaultTheme } from '@rebass/preset'
 
-import '../styles/index.css';
+import 'styles/index.css';
 
 export const theme = {
     ...defaultTheme,
