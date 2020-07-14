@@ -59,7 +59,7 @@ const TableFilters: React.FC < TableFilterTypes > = ({
 				>
 					{mappings.map((label) => (
 						<React.Fragment key={label.value}>
-							{label.filterable &&
+							{label.filterable && label.value && 
 								<Box 
 									key={label.value}
 									px={2}

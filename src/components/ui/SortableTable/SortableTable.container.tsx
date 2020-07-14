@@ -4,6 +4,7 @@ import { omit } from 'lodash';
 
 import SortableTable from './SortableTable';
 import Pagination from 'components/ui/Pagination';
+import TableFilters from 'components/ui/SortableTable/TableFilters';
 
 import { TableMappingTypes } from 'types';
 
@@ -11,7 +12,7 @@ type SortableTableContainerTypes = {
 	items: any,
 	mappings: TableMappingTypes[],
 	primaryKey?: string,
-	onViewDetails: (id: string) => void,
+	onViewDetails?: (id: string) => void,
 };
 
 const getTotalPages = (totalItems: number, perPage: number) => Math.round(totalItems / perPage);
@@ -75,15 +76,10 @@ const SortableTableContainer: React.FC<SortableTableContainerTypes> = ({
 		setTotalPages(getTotalPages(sortedItems.length, perPage));
 	}, [sortedItems]);
 
-	console.log(filterTerms);
-
 	const tableProps = {
 		items: sortedItems,
 		pageItems,
 		mappings,
-		onFilterChange,
-		onClearFilters,
-		filterTerms,
 		onViewDetails,
 		primaryKey: primaryKey || 'id',
 	};
@@ -94,8 +90,17 @@ const SortableTableContainer: React.FC<SortableTableContainerTypes> = ({
 		onPageChange
 	};
 
+	const TableFilterProps = {
+		mappings,
+		onFilterChange,
+		items,
+		filterTerms,
+		onClearFilters
+	};
+
 	return (
 		<>
+  		<TableFilters { ...TableFilterProps } />
 			<SortableTable { ...tableProps } />
 			<Pagination { ...paginationProps } />
 		</>

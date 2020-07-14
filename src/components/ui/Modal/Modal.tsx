@@ -34,7 +34,7 @@ const Modal: React.FC < ModalTypes > = ({ children, isVisible, closeModal }) => 
           bg="white"
           width={[1, 1/2]}
       >
-          <Box p={4}> 
+          <Box p={4}>
               {children}
               <Box mt={4}>
                   <Button 

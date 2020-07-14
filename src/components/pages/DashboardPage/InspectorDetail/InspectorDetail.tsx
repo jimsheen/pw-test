@@ -6,6 +6,8 @@ import {
 	Flex,
 } from 'rebass';
 
+import LoadingSpinner from 'components/ui/LoadingSpinner';
+
 type InspectorDetailTypes = {
 	item: any,
 	questions: any[],
@@ -17,10 +19,8 @@ const InspectorDetail: React.FC<InspectorDetailTypes> = ({
 	isLoading,
 	questions
 }) => {
-	if (isEmpty(item) && !isLoading) return null;
-	if (isLoading) return <Text>Loading...</Text>;
-
-	if (!isLoading && !isEmpty(item)) {
+	if (isLoading) return <LoadingSpinner />;
+	if (!isEmpty(item)) {
 
 		const {
 			score,
@@ -34,37 +34,39 @@ const InspectorDetail: React.FC<InspectorDetailTypes> = ({
 				<Text as="h2" mb={3}>Score: {score}</Text>
 
 				<Text mb={2} fontWeight="bold" as="h3">Questions</Text>
-				<Flex>
-					{answers.map((userAnswer: { question_id: number, answer: string }) => {
-						const question = find(questions, { id: userAnswer.question_id });
-						if (!question) return null;
-						return (
-							<Box
-								mb={2} 
-								pb={2}
-								width={[1, 1/2]}
-							>
-								<Text
-									fontWeight="bold"
-									mb={1}
-									pb={1}
-									sx={{
-										borderBottom: '1px solid lightgray',
-									}}
+				{!isLoading && !isEmpty(questions) &&
+					<Flex>
+						{answers.map((userAnswer: { question_id: number, answer: string }) => {
+							const question = find(questions, { id: userAnswer.question_id });
+							if (!question) return null;
+							return (
+								<Box
+									mb={2} 
+									pb={2}
+									width={[1, 1/2]}
 								>
-									{question.question}
-								</Text>
-									{question.answers.map((answer: string, index: number) => {
-										if (answer === userAnswer.answer) {
-											return <Text fontWeight="bold">{userAnswer.answer}</Text>
-										} else {
-											return <Text>{answer}</Text>
-										}
-									})}
-							</Box>
-						)
-					})}
-				</Flex>
+									<Text
+										fontWeight="bold"
+										mb={1}
+										pb={1}
+										sx={{
+											borderBottom: '1px solid lightgray',
+										}}
+									>
+										{question.question}
+									</Text>
+										{question.answers.map((answer: string, index: number) => {
+											if (answer === userAnswer.answer) {
+												return <Text fontWeight="bold">{userAnswer.answer}</Text>
+											} else {
+												return <Text>{answer}</Text>
+											}
+										})}
+								</Box>
+							)
+						})}
+					</Flex>
+				}
 			</Box>
 		)
 	}

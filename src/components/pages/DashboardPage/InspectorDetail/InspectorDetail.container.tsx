@@ -10,13 +10,9 @@ type InspectorDetailTypes = {
 
 const InspectorDetailContainer: React.FC <InspectorDetailTypes> = ({ item }) => {
 
-	console.log(item);
-
 	const { isLoading, response } = useClient({
 		uri: '/questions',
 	});
-
-	console.log(response);
 
 	return <InspectorDetail item={item} isLoading={isLoading} questions={response} />
 }

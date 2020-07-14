@@ -1,0 +1,27 @@
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    color: #669;
+    padding: 6px 8px;
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+thead {
+    border-bottom: 1px solid #ccc;
+    padding: 8px;
+}
+
+
+tbody tr:nth-child(odd) {
+   background-color: #fbfbfb;
+}
+
+tbody tr:hover {
+    background-color: #f9f8f8;
+}

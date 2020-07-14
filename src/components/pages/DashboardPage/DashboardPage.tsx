@@ -40,12 +40,8 @@ const DashboardPage: React.FC = () => {
 		id: null,
 		item: null,
 	};
-	type modalStateType = {
-		isVisible: boolean,
-		id: string | null,
-	}
-	const [viewDetailsModal, setViewDetailsModal] = useState(defaultModalState as modalStateType);
-	const [detailItem, setDetailItem] = useState<any>(null);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [detailItem, setDetailItem] = useState < any > (null);
 
 	const { isLoading, response } = useClient({
 		uri: '/inspections'
@@ -53,11 +49,8 @@ const DashboardPage: React.FC = () => {
 
 	const onViewDetails = (id: string) => {
 		const item = find(response, { id });
-			setDetailItem(item);
-			setViewDetailsModal((s) => ({
-				isVisible: !s.isVisible,
-				id,
-			}));
+		setDetailItem(item);
+		setIsModalVisible(true);
 	};
 
 	const SortableTableProps = {
@@ -78,8 +71,8 @@ const DashboardPage: React.FC = () => {
 					}
 				</Box>
 				<Modal 
-					isVisible={viewDetailsModal.isVisible}
-					closeModal={() => setViewDetailsModal((s) => ({ ...s, isVisible: false })) }
+					isVisible={detailItem}
+					closeModal={() => setDetailItem(null) }
 				>
 					<InspectorDetail item={detailItem} />
 				</Modal>

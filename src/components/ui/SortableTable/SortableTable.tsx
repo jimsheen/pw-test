@@ -14,46 +14,28 @@ import {
 	Td
 } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import './SortableTable.css';
 
 import { TableMappingTypes } from 'types';
 
-import TableFilters from './TableFilters';
-
 type SortableTableTypes = {
-	items: any[],
 	pageItems: any[],
 	mappings: TableMappingTypes[],
-	filterTerms: any,
-	primaryKey: any,
-	onViewDetails: (id: string) => void,
-	onFilterChange: (key: string, value: string) => void;
-	onClearFilters: () => void,
+	primaryKey?: any,
+	onViewDetails?: (id: string) => void,
 };
 
 const SortableTable: React.FC < SortableTableTypes > = ({
 	mappings,
-	items,
 	pageItems,
-	onFilterChange,
-	onClearFilters,
-	filterTerms,
 	onViewDetails,
-	primaryKey,
+	primaryKey = 'id',
 }) => {
 
-	if (!mappings && !items) return null;
+	if (!mappings && !pageItems) return null;
 
 	return (
 		<React.Fragment>
-			{!isEmpty(mappings) &&
-	  		<TableFilters 
-	  			mappings={mappings} 
-	  			onFilterChange={onFilterChange} 
-	  			items={items}
-	  			filterTerms={filterTerms}
-	  			onClearFilters={onClearFilters}
-	  		/>
-  		}
 			<Table>
 				{!isEmpty(mappings) &&
 			  	<Thead>
@@ -75,14 +57,16 @@ const SortableTable: React.FC < SortableTableTypes > = ({
 			  							{row[col.value]}
 			  						</Td>
 			  					))}
-			  					<Td>
-			  						<Button 
-			  							width="100%"
-			  							onClick={() => onViewDetails(row[primaryKey])}
-			  						>
-			  							View details
-			  						</Button>
-			  					</Td>
+			  					{onViewDetails &&
+				  					<Td>
+				  						<Button 
+				  							width="100%"
+				  							onClick={() => onViewDetails(row[primaryKey])}
+				  						>
+				  							View details
+				  						</Button>
+				  					</Td>
+			  					}
 			  				</Tr>
 			  			))}
 			  		</Tbody>

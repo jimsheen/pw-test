@@ -26,7 +26,7 @@ function UnauthenticatedApp() {
 
 function App() {
 	const { user } = useAuth();
-	return !user ? <AuthenticatedApp /> : <UnauthenticatedApp />
+	return user ? <AuthenticatedApp /> : <UnauthenticatedApp />
 }
 
 export default App;
