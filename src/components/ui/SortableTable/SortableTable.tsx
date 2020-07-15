@@ -2,6 +2,7 @@ import React from 'react';
 import {
 	isEmpty
 } from 'lodash';
+import moment from 'moment';
 import {
 	Button,
 } from 'rebass';
@@ -21,8 +22,8 @@ import { TableMappingTypes } from 'types';
 type SortableTableTypes = {
 	pageItems: any[],
 	mappings: TableMappingTypes[],
-	primaryKey?: any,
-	onViewDetails?: (id: string) => void,
+	primaryKey ? : any,
+	onViewDetails ? : (id: string) => void,
 };
 
 const SortableTable: React.FC < SortableTableTypes > = ({
@@ -52,11 +53,15 @@ const SortableTable: React.FC < SortableTableTypes > = ({
 		  			<Tbody>
 			  			{pageItems.map((row, index) => (
 			  				<Tr key={index} >
-			  					{mappings.map((col, i) => (
-			  						<Td key={col.value} >
-			  							{row[col.value]}
-			  						</Td>
-			  					))}
+			  					{mappings.map((col, i) => {
+
+			  						return (
+				  						<Td key={col.value} >
+				  							{col.isDate ? moment(row[col.value]).format('D/M/Y') : row[col.value]}
+				  						</Td>
+				  					)
+			  					}
+			  						)}
 			  					{onViewDetails &&
 				  					<Td>
 				  						<Button 

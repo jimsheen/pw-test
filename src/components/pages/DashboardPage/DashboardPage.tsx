@@ -31,6 +31,10 @@ const mappings = [{
 }, {
 	label: 'score',
 	value: 'score',
+}, {
+	label: 'Date submitted',
+	value: 'inspectionDate',
+	isDate: true,
 }];
 
 const DashboardPage: React.FC = () => {

@@ -63,6 +63,7 @@ module.exports = function() {
                 username: users[userId].name,
                 score: randomScore(),
                 id: id++,
+                inspectionDate: faker.date.past(1),
                 answers: _.times(questions.length, (answerId) => ({
                   question_id: answerId + 1,
                   answer: `answer ${areaTypeId + 1}`,

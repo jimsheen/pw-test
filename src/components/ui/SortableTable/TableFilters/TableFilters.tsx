@@ -3,6 +3,7 @@ import {
 	uniqBy, 
 	isEmpty
 } from 'lodash';
+import moment from 'moment';
 import {
 	Flex,
 	Box,
@@ -13,6 +14,8 @@ import {
 } from '@rebass/forms';
 
 import { TableMappingTypes } from 'types';
+
+console.log(moment);
 
 type TableFilterTypes = {
 	mappings: TableMappingTypes[],
