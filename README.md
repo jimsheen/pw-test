@@ -20,14 +20,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## Packages used
 
 #### JS / React Packages
-Rebass - https://github.com/rebassjs/rebass
-react-super-responsive-table - https://github.com/coston/react-super-responsive-table
-Storybook - https://github.com/storybookjs/storybook
-Axios - https://github.com/axios/axios
-Lodash - https://github.com/lodash/lodash
+- Rebass - https://github.com/rebassjs/rebass
+- react-super-responsive-table - https://github.com/coston/react-super-responsive-table
+- Storybook - https://github.com/storybookjs/storybook
+- Axios - https://github.com/axios/axios
+- Lodash - https://github.com/lodash/lodash
 #### CSS Packages
-Emotion theming - https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming
-Normalize css - https://github.com/necolas/normalize.css/
+- Emotion theming - https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming
+- Normalize css - https://github.com/necolas/normalize.css/
 #### Mock server packages
-Json server - https://github.com/typicode/json-server
-Faker - https://github.com/Marak/Faker.js#readme
+- Json server - https://github.com/typicode/json-server
+- Faker - https://github.com/Marak/Faker.js#readme
