@@ -3,7 +3,6 @@ import {
 	uniqBy, 
 	isEmpty
 } from 'lodash';
-import moment from 'moment';
 import {
 	Flex,
 	Box,
@@ -14,8 +13,6 @@ import {
 } from '@rebass/forms';
 
 import { TableMappingTypes } from 'types';
-
-console.log(moment);
 
 type TableFilterTypes = {
 	mappings: TableMappingTypes[],
@@ -62,7 +59,7 @@ const TableFilters: React.FC < TableFilterTypes > = ({
 				>
 					{mappings.map((label) => (
 						<React.Fragment key={label.value}>
-							{label.filterable && label.value && 
+							{label.filterable &&
 								<Box 
 									key={label.value}
 									px={2}
