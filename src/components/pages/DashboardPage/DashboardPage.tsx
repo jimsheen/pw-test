@@ -35,12 +35,6 @@ const mappings = [{
 
 const DashboardPage: React.FC = () => {
 
-	const defaultModalState = {
-		isVisible: false,
-		id: null,
-		item: null,
-	};
-	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [detailItem, setDetailItem] = useState < any > (null);
 
 	const { isLoading, response } = useClient({
@@ -50,7 +44,6 @@ const DashboardPage: React.FC = () => {
 	const onViewDetails = (id: string) => {
 		const item = find(response, { id });
 		setDetailItem(item);
-		setIsModalVisible(true);
 	};
 
 	const SortableTableProps = {
